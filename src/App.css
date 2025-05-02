@@ -1,42 +1,75 @@
+
+/* Remove default styles that might conflict */
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: initial;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* Cursor effect */
+.custom-cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: hsl(var(--primary) / 0.3);
+  mix-blend-mode: difference;
+  pointer-events: none;
+  transition: transform 0.1s ease;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  backdrop-filter: invert(1);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
+.cursor-active {
+  transform: translate(-50%, -50%) scale(1.5);
+}
+
+/* Custom scroll progress indicator */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  z-index: 9000;
+  background: linear-gradient(to right, hsl(var(--primary)), hsl(var(--accent)));
+  transform-origin: 0%;
+}
+
+/* Text effect animations */
+.text-reveal {
+  display: inline-block;
+  overflow: hidden;
+}
+
+.text-reveal span {
+  display: inline-block;
+  transform: translateY(100%);
+  animation: revealText 0.8s forwards;
+}
+
+@keyframes revealText {
   to {
-    transform: rotate(360deg);
+    transform: translateY(0);
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* 3D card effect */
+.card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.5s;
 }
 
-.card {
-  padding: 2em;
+.card-3d:hover {
+  transform: perspective(1000px) rotateX(5deg) rotateY(5deg);
 }
 
-.read-the-docs {
-  color: #888;
+.card-3d-content {
+  transform-style: preserve-3d;
+}
+
+.card-3d-content > * {
+  transform: translateZ(30px);
 }

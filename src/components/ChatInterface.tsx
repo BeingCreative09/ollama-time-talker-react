@@ -1,6 +1,6 @@
 
 import { useState, useEffect, FormEvent, useRef } from "react";
-import { ArrowUp } from "lucide-react";
+import { ArrowUp, Cpu, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
@@ -90,25 +90,35 @@ export default function ChatInterface() {
   };
   
   return (
-    <div className="container mx-auto max-w-3xl min-h-screen py-8 px-4 flex flex-col">
-      <div className="flex items-center justify-center mb-8 text-3xl font-light">
-        <span className="text-primary mr-3">✺</span>
-        <h1>{greeting}, {username}</h1>
+    <div className="container mx-auto max-w-4xl min-h-screen py-8 px-4 flex flex-col">
+      <div className="flex items-center justify-center mb-12 mt-4 text-4xl font-light">
+        <div className="glass-panel py-4 px-8 rounded-2xl flex items-center gap-4 float-animation">
+          <Cpu className="text-primary h-8 w-8" />
+          <h1 className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            {greeting}, {username}
+          </h1>
+        </div>
       </div>
       
-      <div className="flex-1 mb-4 overflow-y-auto bg-secondary/20 rounded-lg p-4">
+      <div className="flex-1 mb-6 overflow-y-auto glass-panel rounded-2xl p-6">
         {chatHistory.length === 0 ? (
-          <div className="text-center text-muted-foreground h-full flex items-center justify-center">
-            <p>Start a conversation</p>
+          <div className="text-center text-muted-foreground h-full flex flex-col items-center justify-center">
+            <MessageSquare className="h-12 w-12 mb-4 text-primary/50" />
+            <p className="text-lg">Start a conversation with your AI assistant</p>
+            <p className="text-sm mt-2">Select a model and type a message below</p>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-6">
             {chatHistory.map((msg, index) => (
               <div 
                 key={index} 
-                className={`p-3 rounded-lg ${msg.role === "user" ? "bg-secondary ml-12" : "bg-primary/10 mr-12"}`}
+                className={`p-4 rounded-2xl transition-all duration-300 ${
+                  msg.role === "user" 
+                    ? "bg-primary/10 border border-primary/20 ml-8" 
+                    : "bg-accent/20 border border-accent/20 mr-8"
+                }`}
               >
-                <p>{msg.content}</p>
+                <p className="text-base">{msg.content}</p>
               </div>
             ))}
             <div ref={messageEndRef} />
@@ -121,7 +131,7 @@ export default function ChatInterface() {
           placeholder="How can I help you today?"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          className="w-full pr-14 min-h-24 rounded-xl"
+          className="w-full pr-14 min-h-28 rounded-2xl glass-panel focus-visible:ring-primary"
           disabled={loading || !selectedModel || isProcessing}
         />
         <div className="absolute bottom-4 right-4 flex items-center gap-2">
@@ -130,10 +140,10 @@ export default function ChatInterface() {
             onValueChange={handleModelChange}
             disabled={loading || models.length === 0}
           >
-            <SelectTrigger className="w-32 h-10">
-              <SelectValue placeholder={loading ? "Loading..." : "Model"} />
+            <SelectTrigger className="w-40 h-12 rounded-xl bg-white/70 dark:bg-black/40">
+              <SelectValue placeholder={loading ? "Loading..." : "Select model"} />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="border border-primary/20">
               {models.map((model) => (
                 <SelectItem key={model.name} value={model.name}>
                   {model.name}
@@ -146,7 +156,7 @@ export default function ChatInterface() {
             type="submit" 
             size="icon" 
             disabled={!message.trim() || loading || !selectedModel || isProcessing}
-            className="rounded-full h-10 w-10"
+            className="rounded-full h-12 w-12 bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/30"
           >
             <ArrowUp className="h-5 w-5" />
           </Button>

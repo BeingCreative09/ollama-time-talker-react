@@ -5,6 +5,7 @@ import SkillsShowcase from "@/components/SkillsShowcase";
 import DevOpsTools from "@/components/DevOpsTools";
 import DevExperience from "@/components/DevExperience";
 import ContactSection from "@/components/ContactSection";
+import DevOpsLifecycle from "@/components/DevOpsLifecycle";
 
 const Index = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -31,6 +32,7 @@ const Index = () => {
         <div className="container mx-auto relative z-10">
           <ResumeHero scrollPosition={scrollPosition} />
           <SkillsShowcase />
+          <DevOpsLifecycle />
           <DevOpsTools />
           <DevExperience />
           <ContactSection />
